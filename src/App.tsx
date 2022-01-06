@@ -1,5 +1,6 @@
 import { Button, Form, Input, InputNumber } from 'antd';
-import {DatePicker, Layout} from 'antd';
+
+import { Layout } from 'antd';
 
 function App() {
   const layout = {
@@ -18,42 +19,38 @@ function App() {
     },
   };
   
-  const Demo = () => {
-    const onFinish = (values: any) => {
-      console.log(values);
-    };
-  }
-  
   return (
-    <Layout className="layout">
-          {/* <Layout.Header className="header"><h1>Hello world</h1></Layout.Header> */}
+      <div style={{maxWidth:"1280px", margin:"60px auto"}}>
+        <Layout className="layout">
           <Layout.Content className="content">
-          <Form {...layout} name="nest-messages" validateMessages={validateMessages}>
-      <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-        <InputNumber />
-      </Form.Item>
-      <Form.Item name={['user', 'website']} label="Website">
-        <Input />
-      </Form.Item>
-      <Form.Item name={['user', 'introduction']} label="Introduction">
-        <Input.TextArea />
-      </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-              
-          </Layout.Content>
-          {/* <Layout.Footer className="footer">footer</Layout.Footer> */}
+          <Form {...layout} name="nest-messages" validateMessages={validateMessages} style={{padding:"20px"}}>
+            <Form.Item name={['user', 'name']} label="이름">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'email']} label="이메일" rules={[{ type: 'email' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'birthDay']} label="생년월일" rules={[{ type: 'number', min: 0, max: 99 }]}>
+              <InputNumber />
+            </Form.Item>
+            <Form.Item name={['user', 'phoneNumber']} label="휴대폰 번호">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'userId']} label="아이디">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'password']} label="패스워드">
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Button type="primary" htmlType="submit">
+              회원가입
+            </Button>
+          </Form.Item>
+        </Form>    
+      </Layout.Content>
     </Layout>
+  </div>
   );
 }
 
