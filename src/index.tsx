@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import App from './App';
+import Form from './form';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
@@ -12,6 +13,7 @@ ReactDOM.render(
      <BrowserRouter>  
      <Routes>
       <Route path="/register" element={< App/>} />
+      <Route path="/form" element={< Form/>} />
     </Routes>
     </BrowserRouter>  
   </React.StrictMode>,
