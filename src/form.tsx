@@ -20,21 +20,21 @@ export default function FORM() {
         rate: 3.5,
       }}
     >
-      <Form.Item name="radio-group" label="평소에 PC 게임을 즐겨하십니까?">
+      <Form.Item name="radio-group1" label="평소에 PC 게임을 즐겨하십니까?">
         <Radio.Group>
           <Radio value="a">예</Radio>
           <Radio value="b">아니요</Radio>
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item name="radio-group" label="평소에 모바일 게임을 즐겨하십니까?">
+      <Form.Item name="radio-group2" label="평소에 모바일 게임을 즐겨하십니까?">
         <Radio.Group>
           <Radio value="a">예</Radio>
           <Radio value="b">아니요</Radio>
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item name="radio-group" label="일주일에 며칠 정도 PC 게임을 하십니까?">
+      <Form.Item name="radio-group3" label="일주일에 며칠 정도 PC 게임을 하십니까?">
         <Radio.Group>
           <Radio value="a">1일 미만</Radio>
           <Radio value="b">1~2일</Radio>
@@ -44,7 +44,7 @@ export default function FORM() {
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item name="radio-group" label="일주일에 며칠 정도 모바일게임을 하십니까?">
+      <Form.Item name="radio-group4" label="일주일에 며칠 정도 모바일게임을 하십니까?">
         <Radio.Group>
           <Radio value="a">1일 미만</Radio>
           <Radio value="b">1~2일</Radio>
@@ -54,7 +54,7 @@ export default function FORM() {
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item name="radio-group" label="지난 일주일 동안 게임 때문에 밤을 샌 적이 있다.">
+      <Form.Item name="radio-group5" label="지난 일주일 동안 게임 때문에 밤을 샌 적이 있다.">
         <Radio.Group>
           <Radio value="a">0일</Radio>
           <Radio value="b">1일</Radio>
