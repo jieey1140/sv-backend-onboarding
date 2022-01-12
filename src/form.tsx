@@ -1,7 +1,7 @@
 import {
+  Button,
   Form,
   Radio,
-  Button,
 } from 'antd';
 
 const formItemLayout = {
@@ -9,16 +9,12 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
+
 export default function FORM() {
   return (
     <Form
       name="validate_other"
       {...formItemLayout}
-      initialValues={{
-        'input-number': 3,
-        'checkbox-group': ['A', 'B'],
-        rate: 3.5,
-      }}
     >
       <Form.Item name="radio-group1" label="평소에 PC 게임을 즐겨하십니까?">
         <Radio.Group>
