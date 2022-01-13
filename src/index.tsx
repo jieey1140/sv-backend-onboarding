@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 const navMenu = [
+  {id: 0, NavTitle:"메인", Href: "/"},
   {id: 1, NavTitle:"회원가입", Href: "/register"},
   {id: 2, NavTitle:"설문지", Href: "/form"},
 ]

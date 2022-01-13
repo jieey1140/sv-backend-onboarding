@@ -1,17 +1,34 @@
 import {
   Button,
   Form,
+  Layout,
   Radio,
 } from 'antd';
+
+import { useState } from 'react';
 
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 14 },
 };
 
-
 export default function FORM() {
+  const [values, setValues] = useState({ email: "", password: "" });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // input value 가져오기
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+  // do something 
+    event.preventDefault();
+  };
+
   return (
+    <Layout className="layout">
+    <Layout.Content className="content">
     <Form
       name="validate_other"
       {...formItemLayout}
@@ -69,5 +86,7 @@ export default function FORM() {
         </Button>
       </Form.Item>
     </Form>
+  </Layout.Content>
+</Layout>
   )
 }
