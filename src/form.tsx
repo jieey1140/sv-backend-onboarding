@@ -8,8 +8,8 @@ import {
 import { useState } from 'react';
 
 const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 14 },
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
 };
 
 export default function FORM() {
@@ -32,51 +32,52 @@ export default function FORM() {
     <Form
       name="validate_other"
       {...formItemLayout}
+      style={{padding:"20px"}}
     >
       <Form.Item name="radio-group1" label="평소에 PC 게임을 즐겨하십니까?">
         <Radio.Group>
-          <Radio value="a">예</Radio>
-          <Radio value="b">아니요</Radio>
+          <Radio value="1">예</Radio>
+          <Radio value="2">아니요</Radio>
         </Radio.Group>
       </Form.Item>
 
       <Form.Item name="radio-group2" label="평소에 모바일 게임을 즐겨하십니까?">
         <Radio.Group>
-          <Radio value="a">예</Radio>
-          <Radio value="b">아니요</Radio>
+          <Radio value="1">예</Radio>
+          <Radio value="2">아니요</Radio>
         </Radio.Group>
       </Form.Item>
 
       <Form.Item name="radio-group3" label="일주일에 며칠 정도 PC 게임을 하십니까?">
         <Radio.Group>
-          <Radio value="a">1일 미만</Radio>
-          <Radio value="b">1~2일</Radio>
-          <Radio value="c">3~4일</Radio>
-          <Radio value="d">5~7일</Radio>
-          <Radio value="e">2주 간 거의 매일</Radio>
+          <Radio value="1">1일 미만</Radio>
+          <Radio value="2">1~2일</Radio>
+          <Radio value="3">3~4일</Radio>
+          <Radio value="4">5~7일</Radio>
+          <Radio value="5">2주 간 거의 매일</Radio>
         </Radio.Group>
       </Form.Item>
 
       <Form.Item name="radio-group4" label="일주일에 며칠 정도 모바일게임을 하십니까?">
         <Radio.Group>
-          <Radio value="a">1일 미만</Radio>
-          <Radio value="b">1~2일</Radio>
-          <Radio value="c">3~4일</Radio>
-          <Radio value="d">5~7일</Radio>
-          <Radio value="e">2주 간 거의 매일</Radio>
+          <Radio value="1">1일 미만</Radio>
+          <Radio value="2">1~2일</Radio>
+          <Radio value="3">3~4일</Radio>
+          <Radio value="4">5~7일</Radio>
+          <Radio value="5">2주 간 거의 매일</Radio>
         </Radio.Group>
       </Form.Item>
 
       <Form.Item name="radio-group5" label="지난 일주일 동안 게임 때문에 밤을 샌 적이 있다.">
         <Radio.Group>
-          <Radio value="a">0일</Radio>
-          <Radio value="b">1일</Radio>
-          <Radio value="c">2일</Radio>
-          <Radio value="d">3일</Radio>
-          <Radio value="e">4일</Radio>
-          <Radio value="f">5일</Radio>
-          <Radio value="g">6일</Radio>
-          <Radio value="h">7일</Radio>
+          <Radio value="1">0일</Radio>
+          <Radio value="2">1일</Radio>
+          <Radio value="3">2일</Radio>
+          <Radio value="4">3일</Radio>
+          <Radio value="5">4일</Radio>
+          <Radio value="6">5일</Radio>
+          <Radio value="7">6일</Radio>
+          <Radio value="8">7일</Radio>
         </Radio.Group>
       </Form.Item>
 
