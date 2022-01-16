@@ -1,10 +1,10 @@
-import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client';
+import { ApolloClient, createHttpLink, gql, InMemoryCache, useQuery } from '@apollo/client';
 import { Button, Form, Input, InputNumber } from 'antd';
 
 import { ApolloProvider } from '@apollo/client';
 import { Layout } from 'antd';
 import { useState } from 'react';
-
+import { setContext } from '@apollo/client/link/context';
 const GET_SURVEY_LIST = gql`
 query GetSurveyList {
   surveyList {
@@ -16,8 +16,23 @@ query GetSurveyList {
 `
 
 function App() {
-  const client = new ApolloClient({
+
+  const httpLink = createHttpLink({
     uri: 'https://select-duckling-42.hasura.app/v1/graphql',
+  });
+  
+  const ApolloClientLink = setContext((_, { headers }) => {
+    const token = '5kS1MtfPDEMNLpIMOLtzdqHPl6mf18WxFaXjFTGlvaCwu0VHGZNU1gfSOz1U69Az';
+    return {
+      headers: {
+        ...headers,
+        "x-hasura-admin-secret": token
+      }
+    }
+  });
+
+  const client = new ApolloClient({
+    link: ApolloClientLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 
