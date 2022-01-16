@@ -5,8 +5,16 @@ import {
   Radio,
 } from 'antd';
 import { gql, useMutation, useQuery } from "@apollo/client";
-
 import { useState } from 'react';
+const GET_SURVEY_LIST = gql`
+query GetSurveyList {
+  surveyList {
+    surveyTitle
+    regDate
+    id
+  }
+}
+`
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -14,8 +22,17 @@ const formItemLayout = {
 };
 
 export default function FORM() {
-  const [values, setValues] = useState({ email: "", password: "" });
 
+
+  const [values, setValues] = useState({ email: "", password: "" });
+  const [title, setTitle] = useState('')
+
+
+  const { loading, error, data } = useQuery(GET_SURVEY_LIST);
+  if(loading) return (<>잠시만 기다려 주세요.</>)
+  if(error) return(<>에러가 발생하였습니다.</>)
+
+  // setTitle(data[0].surveyTitle)
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   // input value 가져오기
     const { name, value } = event.target;
@@ -30,6 +47,7 @@ export default function FORM() {
   return (
     <Layout className="layout">
     <Layout.Content className="content">
+      {/* <h1 style={{ textAlign:'center' }}>{title}</h1> */}
     <Form
       name="validate_other"
       {...formItemLayout}
