@@ -1,9 +1,26 @@
+import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client';
 import { Button, Form, Input, InputNumber } from 'antd';
 
+import { ApolloProvider } from '@apollo/client';
 import { Layout } from 'antd';
 import { useState } from 'react';
 
+const GET_SURVEY_LIST = gql`
+query GetSurveyList {
+  surveyList {
+    surveyTitle
+    regDate
+    id
+  }
+}
+`
+
 function App() {
+  const client = new ApolloClient({
+    uri: 'https://select-duckling-42.hasura.app/v1/graphql',
+    cache: new InMemoryCache(),
+  });
+
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -24,6 +41,13 @@ function App() {
   
   const [values, setValues] = useState({ name: "", email: "", password: "", birthDay:"", phoneNumber:"", userId:"" });
 
+
+
+  const { loading, error, data } = useQuery(GET_SURVEY_LIST);
+  if(loading) return (<>잠시만 기다려 주세요.</>)
+  if(error) return(<>에러가 발생하였습니다.</>)
+
+  console.log(data);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   // input value 가져오기
     const { name, value } = event.target;
@@ -39,6 +63,7 @@ function App() {
   
   return (
       <div style={{maxWidth:"1280px", margin:"60px auto"}}>
+        <ApolloProvider client={client}>
         <Layout className="layout">
           <Layout.Content className="content">
           <Form {...layout} name="nest-messages" validateMessages={validateMessages} style={{padding:"20px"}}>
@@ -68,6 +93,7 @@ function App() {
         </Form>    
       </Layout.Content>
     </Layout>
+    </ApolloProvider>
   </div>
   );
 }
