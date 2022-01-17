@@ -4,17 +4,39 @@ import {
   Layout,
   Radio,
 } from 'antd';
+
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from 'react';
 const GET_SURVEY_LIST = gql`
 query GetSurveyList {
-  surveyList {
-    surveyTitle
+  surveyList_by_pk(id: 1) {
     regDate
-    id
+    surveyTitle
   }
 }
 `
+
+const GET_SURVEY_QUS_LIST = gql`
+
+query surveyQustionList {
+   surveyQustion {
+    qustionTitle
+    surveyId
+    id
+  }
+}`
+
+
+const GET_SURVEY_ANS_LIST = gql`
+query surveyAnswerList {
+  surveyAnswer {
+    surveyId
+    surveyQustionId
+    answer
+  }
+}`
+
+
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -22,37 +44,37 @@ const formItemLayout = {
 };
 
 export default function FORM() {
-
-
   const [values, setValues] = useState({ email: "", password: "" });
-  const [title, setTitle] = useState('')
-
-
   const { loading, error, data } = useQuery(GET_SURVEY_LIST);
+  const res2 = useQuery(GET_SURVEY_QUS_LIST);
+  const answer = useQuery(GET_SURVEY_ANS_LIST)
   if(loading) return (<>잠시만 기다려 주세요.</>)
   if(error) return(<>에러가 발생하였습니다.</>)
-
-  // setTitle(data[0].surveyTitle)
+console.log(answer.data.surveyAnswer)
+console.log(res2.data.surveyQustion)
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  // input value 가져오기
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
   };
 
   const handleSubmit = (event: React.FormEvent) => {
-  // do something 
     event.preventDefault();
   };
 
   return (
     <Layout className="layout">
     <Layout.Content className="content">
-      {/* <h1 style={{ textAlign:'center' }}>{title}</h1> */}
+    <h1 style={{ textAlign:'center' }}>{loading ? "Loading..." : data.surveyList_by_pk.surveyTitle}</h1>
     <Form
       name="validate_other"
       {...formItemLayout}
       style={{padding:"20px"}}
     >
+      {res2.loading ? "Loading" : res2.data.surveyQustion.map((index: any)=>{
+        return (answer.data.surveyAnswer.map((item: any) => {
+          return <>{item.answer}</>
+        }))
+      })}
       <Form.Item name="radio-group1" label="평소에 PC 게임을 즐겨하십니까?">
         <Radio.Group>
           <Radio value="1">예</Radio>
