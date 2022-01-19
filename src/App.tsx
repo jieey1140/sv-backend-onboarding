@@ -1,8 +1,10 @@
 
 import { gql, useMutation } from '@apollo/client';
-import { Button, Form, Input, InputNumber } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { Layout } from 'antd';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -24,12 +26,27 @@ function App() {
   };
   /* eslint-enable no-template-curly-in-string */
   
-  const [values, setValues] = useState({ name: "", email: "", password: "", birthDay:"", phoneNumber:"", userId:"" });
-
+const [values, setValues] = useState({ name: "", email: "", password: "", birthDay:"", phoneNumber:"", userId:"" });
 
 const POST_USER = gql`
-mutation post_insert_users($input: users_insert_input!) {
-  insert_users(email: $input) {
+mutation (
+  $birthDay: String
+  $email: String
+  $gender: gender
+  $name: String
+  $password: String
+  $phoneNumber: String
+  $userId: String
+) {
+  insert_users_one(object:{
+    birthDay: $birthDay
+    email: $email
+    gender: $gender
+    name: $name
+    password: $password
+    phoneNumber: $phoneNumber
+    userId: $userId
+  }) {
     birthDay
     email
     gender
@@ -43,33 +60,42 @@ mutation post_insert_users($input: users_insert_input!) {
 function execPostUser () {
   console.log({input: values})
   postUser({
-    variables: {email: values.email}
-    // variables: {birthDay: values.birthDay, email: values.email,
-    //   name: values.name, password: values.password, phoneNumber: values.phoneNumber, userId: values.userId}
+    variables: {
+      birthDay: values.birthDay,
+      email: values.email,
+      gender: 'M',
+      name: values.name,
+      password: values.password,
+      phoneNumber: values.phoneNumber,
+      userId: values.userId
+    }
   })
 }
 
-const [postUser] = useMutation(POST_USER, { onCompleted: postUserCompleted });
-
-function postUserCompleted (data: any) {
-console.log(data);
-}
+  const [postUser] = useMutation(POST_USER, { onCompleted: postUserCompleted });
+  function postUserCompleted (data: any) {
+    console.log(data);
+    toast(`${values.userId} 회원가입이 완료되었습니다.`);
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  // input value 가져오기
     const { name, value } = event.target;
     console.log(name, value);
     setValues({ ...values, [name]: value });
   };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log(values);
-  };
-
   
   return (
       <div style={{maxWidth:"1280px", margin:"60px auto"}}>
+        <ToastContainer position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
         <Layout className="layout">
           <Layout.Content className="content">
           <Form {...layout} name="nest-messages" validateMessages={validateMessages} style={{padding:"20px"}}>
