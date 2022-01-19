@@ -1,4 +1,5 @@
 
+import { gql, useMutation } from '@apollo/client';
 import { Button, Form, Input, InputNumber } from 'antd';
 import { Layout } from 'antd';
 import { useState } from 'react';
@@ -26,6 +27,34 @@ function App() {
   const [values, setValues] = useState({ name: "", email: "", password: "", birthDay:"", phoneNumber:"", userId:"" });
 
 
+const POST_USER = gql`
+mutation post_insert_users($input: users_insert_input!) {
+  insert_users(email: $input) {
+    birthDay
+    email
+    gender
+    name
+    password
+    phoneNumber
+    userId
+  }
+}`
+
+function execPostUser () {
+  console.log({input: values})
+  postUser({
+    variables: {email: values.email}
+    // variables: {birthDay: values.birthDay, email: values.email,
+    //   name: values.name, password: values.password, phoneNumber: values.phoneNumber, userId: values.userId}
+  })
+}
+
+const [postUser] = useMutation(POST_USER, { onCompleted: postUserCompleted });
+
+function postUserCompleted (data: any) {
+console.log(data);
+}
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   // input value 가져오기
     const { name, value } = event.target;
@@ -50,7 +79,7 @@ function App() {
             <Form.Item name={['user', 'email']} label="이메일" rules={[{ type: 'email' }]}>
               <Input onChange={handleChange} name="email" />
             </Form.Item>
-            <Form.Item name={['user', 'birthDay']} label="생년월일" rules={[{ type: 'number', min: 0, max: 99 }]}>
+            <Form.Item name={['user', 'birthDay']} label="생년월일" rules={[{ type: 'string', min: 0, max: 99 }]}>
               <Input onChange={handleChange} name="birthDay" />
             </Form.Item>
             <Form.Item name={['user', 'phoneNumber']} label="휴대폰 번호">
@@ -63,7 +92,7 @@ function App() {
               <Input onChange={handleChange} name="password" />
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit" onSubmit={handleSubmit}>
+            <Button type="primary" htmlType="submit" onClick={execPostUser}>
               회원가입
             </Button>
           </Form.Item>

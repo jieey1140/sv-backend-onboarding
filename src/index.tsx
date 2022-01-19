@@ -29,7 +29,7 @@ const ApolloClientLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       "x-hasura-admin-secret": token
-    }
+    } 
   }
 });
 

@@ -52,8 +52,9 @@ export default function FORM() {
     setValues({ ...values, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const onFinish = (values: any) => {
+    console.log(values);
+    alert('submit');
   };
 
   return (
@@ -64,6 +65,7 @@ export default function FORM() {
       name="validate_other"
       {...formItemLayout}
       style={{padding:"20px"}}
+      onFinish={onFinish}
     >
       {surveyQustionList.loading ? "Loading" : surveyQustionList.data.surveyQustion.map((index: any)=>{
         return (
