@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { POST_USER } from './sql';
 
 function App() {
 
@@ -27,35 +28,6 @@ function App() {
   /* eslint-enable no-template-curly-in-string */
   
 const [values, setValues] = useState({ name: "", email: "", password: "", birthDay:"", phoneNumber:"", userId:"" });
-
-const POST_USER = gql`
-mutation (
-  $birthDay: String
-  $email: String
-  $gender: gender
-  $name: String
-  $password: String
-  $phoneNumber: String
-  $userId: String
-) {
-  insert_users_one(object:{
-    birthDay: $birthDay
-    email: $email
-    gender: $gender
-    name: $name
-    password: $password
-    phoneNumber: $phoneNumber
-    userId: $userId
-  }) {
-    birthDay
-    email
-    gender
-    name
-    password
-    phoneNumber
-    userId
-  }
-}`
 
 function execPostUser () {
   console.log({input: values})

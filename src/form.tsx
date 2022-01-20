@@ -7,32 +7,9 @@ import {
 
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from 'react';
-const GET_SURVEY_LIST = gql`
-query GetSurveyList {
-  surveyList_by_pk(id: 1) {
-    regDate
-    surveyTitle
-  }
-}`
-
-const GET_SURVEY_QUS_LIST = gql`
-query surveyQustionList {
-   surveyQustion {
-    qustionTitle
-    surveyId
-    id
-  }
-}`
-
-const GET_SURVEY_ANS_LIST = gql`
-query surveyAnswerList {
-  surveyAnswer {
-    surveyId
-    surveyQustionId
-    answer
-    answerTitle
-  }
-}`
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { GET_SURVEY, POST_SURVEY } from './sql';
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -40,10 +17,40 @@ const formItemLayout = {
 };
 
 export default function FORM() {
+  const { loading, error, data} = useQuery(GET_SURVEY)
+  const [postSurvey] = useMutation(POST_SURVEY, { onCompleted: postSurveyCompleted });
+  function execPostUser (values: any) {
+    console.log(values)
+    postSurvey({
+      variables: {
+        userId:"jieey11401",
+        surveyId:1,
+
+        answer1: values.surveyQustionId1,
+        surveyQustionId1: "1",
+
+        answer3: values.surveyQustionId3,
+        surveyQustionId3: "3",
+      
+        answer4: values.surveyQustionId4,
+        surveyQustionId4: "4",
+      
+        answer5: values.surveyQustionId5,
+        surveyQustionId5: "5",
+      
+        answer6: values.surveyQustionId6,
+        surveyQustionId6: "6",
+      }
+    })
+  }
+   
+  function postSurveyCompleted (data: any) {
+    console.log(data);
+    toast(`설문지 등록이 완료되었습니다.`);
+  }
+
   const [values, setValues] = useState({ email: "", password: "" });
-  const { loading, error, data } = useQuery(GET_SURVEY_LIST);
-  const surveyQustionList = useQuery(GET_SURVEY_QUS_LIST);
-  const answer = useQuery(GET_SURVEY_ANS_LIST)
+
   if(loading) return (<>잠시만 기다려 주세요.</>)
   if(error) return(<>에러가 발생하였습니다.</>)
 
@@ -52,26 +59,31 @@ export default function FORM() {
     setValues({ ...values, [name]: value });
   };
 
-  const onFinish = (values: any) => {
-    console.log(values);
-    alert('submit');
-  };
-
   return (
     <Layout className="layout">
+      <ToastContainer position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
     <Layout.Content className="content">
     <h1 style={{ textAlign:'center' }}>{loading ? "Loading..." : data.surveyList_by_pk.surveyTitle}</h1>
     <Form
       name="validate_other"
       {...formItemLayout}
       style={{padding:"20px"}}
-      onFinish={onFinish}
+      onFinish={execPostUser}
     >
-      {surveyQustionList.loading ? "Loading" : surveyQustionList.data.surveyQustion.map((index: any)=>{
+      {data.surveyQustion.map((index: any)=>{
         return (
-          <Form.Item name={`radio-group${index.id}`} label={index.qustionTitle} key={index.id}>
+          <Form.Item name={`surveyQustionId${index.id}`} label={index.qustionTitle} key={index.id}>
             <Radio.Group>
-              {answer.loading ? "Loading" : answer.data.surveyAnswer.map((item: any) => {
+              {data.surveyAnswer.map((item: any) => {
                 return index.id === item.surveyQustionId ? <Radio value={item.answer}>{item.answerTitle}</Radio> : null
               })}
             </Radio.Group>
